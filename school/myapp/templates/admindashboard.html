@@ -2,7 +2,18 @@
 {% block title %}Admin Dashboard{% endblock %}
 {% block content %}
 <div class="container">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show mt-3" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      
+      </div>
+      {% endfor %}
+      {% endif %}
+   
     <h1 class="text-warning text-center">Admin Dashboard</h1>
+    <a href="{% url 'add' %}" class="btn btn-info mb-3">ADD STUDENT</a>
     <table class="table table-info table-striped-columns">
         <thead>
             <tr>
@@ -23,8 +34,9 @@
                 <td>{{x.age}}</td>
                 <td>{{x.course}}</td></td>
                 <td>
-                    <a href="{% url 'delete' x.id %}" class="btn btn-danger">DELETE</a>
-                    <a href="" class="btn btn-warning">UPDATE</a>
+                    <a href="{% url 'delete' x.id %}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete {{x.firstname}}?')"
+                    >DELETE</a>
+                    <a href="{% url 'update' x.id %}" class="btn btn-warning">UPDATE</a>
                 </td>
             </tr>
         </tbody>
